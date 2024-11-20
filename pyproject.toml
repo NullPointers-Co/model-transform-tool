@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "model-transform"
+version = "0.1.0"
+description = ""
+authors = ["chann1n9 <mactavishking@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+coremltools = "^8.0"
+ultralytics = "^8.3.33"
+torch = "^2.5.1"
+scikit-learn = "^1.5.2"
+click = "^8.1.7"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

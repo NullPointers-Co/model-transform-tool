@@ -66,15 +66,25 @@ def _transform(yolo_model, **kwargs):
     return _outfile_path
 
 def _download(model_name, outpath):
+    if not os.path.isdir(outpath):
+        raise ValueError(f"Output path {outpath} is not a valid directory.")
+
     from ultralytics import YOLO
     yolo_model = YOLO(model_name)
     if outpath:
         _file = os.path.join(outpath, model_name)
         yolo_model.save(_file)
         click.echo(f"Model saved to {_file}")
+
+        try:
+            if os.path.exists(model_name):
+                click.echo(f"Cleaning up local tmp file {model_name}")
+                os.remove(model_name)
+        except FileNotFoundError:
+            click.echo(f"Clean up failed. File {model_name} not found. You should manually delete it.")
+
     else:
-        yolo_model.save()
-        click.echo(f"Model saved")
+        click.echo(f"Model saved to {os.path.join(os.getcwd(), model_name)}")
 
 @click.group(cls=CustomCommand)
 def cli():
